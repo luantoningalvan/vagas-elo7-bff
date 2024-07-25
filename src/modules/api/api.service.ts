@@ -6,7 +6,7 @@ import { GetJobsApiResponseDto } from './dtos/get-jobs-api-response.dto';
 
 @Injectable()
 export class ApiService {
-  baseApi: AxiosInstance;
+  private baseApi: AxiosInstance;
 
   constructor(private readonly config: ConfigService<Env, true>) {
     this.baseApi = axios.create({
@@ -15,9 +15,13 @@ export class ApiService {
   }
 
   async getJobs() {
-    const response =
-      await this.baseApi.get<GetJobsApiResponseDto>('mock-vagas.json');
+    try {
+      const response =
+        await this.baseApi.get<GetJobsApiResponseDto>('mock-vagas.json');
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching jobs');
+    }
   }
 }

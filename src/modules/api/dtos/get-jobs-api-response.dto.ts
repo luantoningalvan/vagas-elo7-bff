@@ -1,4 +1,4 @@
-export class GetJobsApiResponseDto {
+export interface GetJobsApiResponseDto {
   jobs: {
     title: string;
     type: string;

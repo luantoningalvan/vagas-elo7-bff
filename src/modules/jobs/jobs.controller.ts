@@ -14,8 +14,8 @@ export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
   @Get('')
-  getJobs(@Query() query: GetJobsQueryDto) {
-    const { page, search } = query;
+  getJobs(@Query() query?: GetJobsQueryDto) {
+    const { page = 1, search } = query || {};
 
     return this.jobsService.getJobs(page, search);
   }
