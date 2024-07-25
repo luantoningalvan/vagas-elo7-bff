@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
+import { ApiService } from '../api/api.service';
 
 @Injectable()
 export class JobsService {
+  constructor(private readonly apiService: ApiService) {}
+
   async getJobs(page: number, search?: string) {
-    const response = await axios.get('https://img.elo7.com.br/mock-vagas.json');
+    const response = await this.apiService.getJobs();
 
-    const { jobs } = response.data;
-
-    const filteredJobs = jobs.filter((job) => {
+    const filteredJobs = response.jobs.filter((job) => {
       if (!job.is_active) return false;
 
       if (search) {
